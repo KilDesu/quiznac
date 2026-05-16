@@ -19,5 +19,5 @@ for (const index in fileNames) {
     process.argv[firstArgIndex + Number(index)] || "",
   );
 
-  console.log(newContent);
+  await fs.writeFile(file, newContent, "utf-8");
 }
