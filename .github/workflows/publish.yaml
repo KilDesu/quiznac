@@ -98,8 +98,7 @@ jobs:
       - name: init mobile project
         if: matrix.mobile != ''
         run: |
-          cd ./.github/fixtures/example-with-tauri-v2
-          pnpm dlx @tauri-apps/cli ${{ matrix.mobile }} init
+          bunx @tauri-apps/cli ${{ matrix.mobile }} init
 
       - name: install frontend dependencies
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
