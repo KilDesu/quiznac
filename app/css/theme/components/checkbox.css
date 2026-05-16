@@ -1,0 +1,11 @@
+.q-checkbox__inner {
+  color: var(--on-surface);
+
+  &.q-checkbox__inner--truthy {
+    color: var(--primary);
+  }
+
+  & .q-checkbox__svg {
+    color: var(--on-primary);
+  }
+}

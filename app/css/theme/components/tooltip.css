@@ -1,0 +1,7 @@
+.q-tooltip {
+  background-color: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+
+  border-radius: 0.5rem;
+  box-shadow: none;
+}

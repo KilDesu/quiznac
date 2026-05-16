@@ -1,0 +1,5 @@
+.q-radio {
+  & .q-radio__inner {
+    color: currentColor;
+  }
+}

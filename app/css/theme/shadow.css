@@ -1,0 +1,21 @@
+body {
+  --outer-shadow: 
+    /* top highlight */ inset 0 1px 2px
+      color-mix(in srgb, var(--inverse-surface), transparent 90%),
+    /* dark shadow */ 0 1px 2px color-mix(in srgb, var(--surface), transparent 70%),
+    /* soft shadow */ 0 2px 4px color-mix(in srgb, var(--surface), transparent 85%);
+  --inner-shadow: 
+    /* top shadow */ inset 0 1px 2px
+      color-mix(in srgb, var(--surface), transparent 70%),
+    /* bottom highlight */ inset 0 -1px 2px color-mix(in srgb, var(--inverse-surface), transparent
+          80%),
+    /* soft highlight */ inset 0 2px 4px color-mix(in srgb, var(--inverse-surface), transparent 90%);
+}
+
+.shadow-out {
+  box-shadow: var(--outer-shadow);
+}
+
+.shadow-in {
+  box-shadow: var(--inner-shadow);
+}

@@ -1,0 +1,11 @@
+.q-card {
+  border-radius: 0.75rem;
+
+  &--bordered {
+    border: 1px solid var(--outline);
+  }
+
+  &:is(.q-dialog__inner > &) {
+    border-radius: 0.75rem;
+  }
+}
