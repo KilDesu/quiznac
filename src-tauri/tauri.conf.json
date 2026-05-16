@@ -58,6 +58,9 @@
         "language": "fr-FR",
         "template": "./main.wxs"
       }
+    },
+    "macOS": {
+      "signingIdentity": "-"
     }
   }
 }
