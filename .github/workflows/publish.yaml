@@ -96,7 +96,7 @@ jobs:
       - name: init mobile project
         if: matrix.mobile != ''
         run: |
-          bunx @tauri-apps/cli ${{ matrix.mobile }} init
+          bun tauri ${{ matrix.mobile }} init
 
       - name: install frontend dependencies
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
@@ -105,20 +105,41 @@ jobs:
       - name: prepare API keys
         run: bun ./app/scripts/prepareKeys.ts ${{ secrets.FIREBASE_API_KEY }} ${{ secrets.IMGBB_API_KEY }}
 
-      - name: debug mobile platforms
-        run: echo "Mobile platform - ${{ matrix.mobile }} / isMobile - ${{ matrix.mobile != '' }}"
-
       - uses: tauri-apps/tauri-action@v0
+        if: matrix.mobile == ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: quiznac-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-          releaseName: "QUIZNAC v__VERSION__"
-          releaseBody: "Voir les assets pour installer l'application sur différentes plateformes."
-          releaseDraft: true
-          uploadWorkflowArtifacts: true
-          prerelease: false
+          releaseName: QUIZNAC v__VERSION__
+          releaseBody: Voir les assets pour installer l'application sur différentes plateformes.
           args: ${{ matrix.args }}
-          # Tauri script should be "bunx @tauri-apps/cli ${{ matrix.mobile }}" only if matrix.mobile is not empty
-          tauriScript: ${{ matrix.mobile != '' && format('bunx @tauri-apps/cli {0}', matrix.mobile) || '' }}
-          mobile: ${{ matrix.mobile }}
+
+      - name: build mobile
+        if: matrix.mobile != ''
+        run: bun tauri ${{ matrix.mobile }} build
+
+      - name: publish ios
+        if: matrix.mobile == 'ios'
+        uses: softprops/action-gh-release@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: quiznac-v__VERSION__
+          name: QUIZNAC v__VERSION__
+          body: Voir les assets pour installer l'application sur différentes plateformes.
+          files: |
+            ./src-tauri/gen/apple/build/arm64/Quiznac.ipa
+
+      - name: publish android
+        if: matrix.mobile == 'android'
+        uses: softprops/action-gh-release@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: quiznac-v__VERSION__
+          name: QUIZNAC v__VERSION__
+          body: Voir les assets pour installer l'application sur différentes plateformes.
+          files: |
+            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk
+            ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
