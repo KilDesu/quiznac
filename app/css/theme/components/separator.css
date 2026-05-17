@@ -1,0 +1,4 @@
+.q-separator {
+  background: var(--outline);
+  opacity: 0.5;
+}

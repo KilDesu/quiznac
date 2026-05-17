@@ -1,0 +1,3 @@
+.q-table * {
+  border-color: color-mix(in srgb, var(--outline) 25%, transparent) !important;
+}

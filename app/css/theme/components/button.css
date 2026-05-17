@@ -1,0 +1,7 @@
+.q-btn {
+  border-radius: 0.75rem;
+
+  &::before {
+    box-shadow: none;
+  }
+}
