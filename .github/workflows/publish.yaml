@@ -96,7 +96,7 @@ jobs:
       - name: init mobile project
         if: matrix.mobile != ''
         run: |
-          bun tauri ${{ matrix.mobile }} init
+          bun @tauri-apps/cli ${{ matrix.mobile }} init
 
       - name: install frontend dependencies
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
@@ -117,7 +117,7 @@ jobs:
 
       - name: build mobile
         if: matrix.mobile != ''
-        run: bun tauri ${{ matrix.mobile }} build
+        run: bun @tauri-apps/cli ${{ matrix.mobile }} build
 
       - name: publish ios
         if: matrix.mobile == 'ios'
