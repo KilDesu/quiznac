@@ -26,8 +26,6 @@ jobs:
           - platform: "ubuntu-latest"
             args: ""
             mobile: "android"
-          - platform: "ubuntu-latest-arm" # Only available in public repos.
-            args: ""
           - platform: "windows-latest"
             args: ""
 
@@ -39,7 +37,17 @@ jobs:
         if: matrix.platform == 'ubuntu-22.04' || matrix.platform == 'ubuntu-22.04-arm' # This must match the platform value defined above.
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            libwebkit2gtk-4.1-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            build-essential \
+            curl \
+            wget \
+            file
+        shell: bash
 
       - name: setup bun
         uses: oven-sh/setup-bun@v2
@@ -98,7 +106,7 @@ jobs:
       - name: init mobile project
         if: matrix.mobile != ''
         run: |
-          bunx @tauri-apps/cli ${{ matrix.mobile }} init
+          bun tauri ${{ matrix.mobile }} init
 
       - name: install frontend dependencies
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
@@ -111,10 +119,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-          releaseName: "App v__VERSION__"
-          releaseBody: "See the assets to download this version and install."
+          tagName: quiznac-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
+          releaseName: "QUIZNAC v__VERSION__"
+          releaseBody: "Voir les assets pour installer l'application sur différentes plateformes."
           releaseDraft: true
+          uploadPlainBinary: true
+          uploadWorkflowArtifacts: true
           prerelease: false
           args: ${{ matrix.args }}
           mobile: ${{ matrix.mobile }}
