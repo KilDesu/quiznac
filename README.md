@@ -1,75 +1,35 @@
-# Nuxt Minimal Starter
+# QUIZNAC - Application de Quiz pour l'ENAC
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## A quoi ça sert ?
 
-## Setup
+Cette application sert à rassembler des quiz pour tous les cours de 2ème année GSEA afin de faciliter les révisions.
 
-Make sure to install dependencies:
+Cela permet d'éviter les aller-retours entre les différents cours sur E-Campus, sans parler des cours qui n'ont pas de quiz.
 
-```bash
-# npm
-npm install
+## Qui crée et modifie ces quiz ?
 
-# pnpm
-pnpm install
+Tout le monde ! C'est pourquoi on compte sur la communauté pour faire vivre cette application et en tenir les données à jour, et de qualité.
 
-# yarn
-yarn install
+## Comment contribuer ?
 
-# bun
-bun install
-```
+### La structure des données
 
-## Development Server
+Les donées sont structurées en cours, chacun contenant des chapitres, eux-mêmes contenant des questions.
 
-Start the development server on `http://localhost:3000`:
+Il est possible d'ajouter, de modifier et de retirer des chapitres et des questions. Pour les cours, il faut contacter [l'administrateur](mailto:contact.quiznac@gmail.com) directement.
 
-```bash
-# npm
-npm run dev
+Chaque question peut avoir un nombre arbitraire de réponses, dont une ou plusieurs peuvent être correctes. Les questions peuvent également contenir des images.
 
-# pnpm
-pnpm dev
+### Les problèmes
 
-# yarn
-yarn dev
+S'il y a des erreurs, merci de contacter [l'administrateur](mailto:contact.quiznac@gmail.com) ou d'utiliser les issues Github.
 
-# bun
-bun run dev
-```
+### Développement
 
-## Production
+Tout d'abord, cloner le projet : `git clone https://github.com/KilDesu/quiznac.git`
 
-Build the application for production:
+Ce projet utilise `Tauri` pour créer des applications de bureau et mobiles, le langage `Rust` pour le backend et `VueJS` pour le frontend.
 
-```bash
-# npm
-npm run build
+Par confort, le frontend utilise `Nuxt 4` (pour les auto-import et le routeur) et `Quasar` pour la librairie de composants.
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Les quiz sont hébergés sur `Firestore` (aucune donnée sensible n'y est stockée) et les images le sont sur `Imgbb`.

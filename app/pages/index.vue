@@ -26,9 +26,7 @@
       se fait dans
       <NuxtLink to="/configuration"> l'onglet <b>Configuration</b> </NuxtLink>.
       Pour ajouter des cours, merci de contacter directement
-      <a href="mailto:kilian.davies@aviation-civile.gouv.fr">
-        <b>Kilian DAVIES</b> </a
-      >.<br />
+      <a href="mailto:contact.quiznac@gmail.com"> l'administrateur </a>.<br />
 
       Les questions peuvent avoir un nombre arbitraire de réponses dont une ou
       plus peuvent être correctes. Les questions peuvent également contenir des
