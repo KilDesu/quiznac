@@ -4,6 +4,8 @@ import path from "path";
 const commandsPath = path.resolve("./src-tauri/src/commands");
 const fileNames = ["firebase", "imgbb"];
 
+console.log(process.argv);
+
 for (const index in fileNames) {
   const fileName = fileNames[index]!;
   const file = path.join(commandsPath, `${fileName}.rs`);
