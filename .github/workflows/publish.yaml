@@ -105,6 +105,9 @@ jobs:
       - name: prepare API keys
         run: bun ./app/scripts/prepareKeys.ts ${{ secrets.FIREBASE_API_KEY }} ${{ secrets.IMGBB_API_KEY }}
 
+      - name: debug mobile platforms
+        run: echo "Mobile platform - ${{ matrix.mobile }} / isMobile - ${{ matrix.mobile != '' }}"
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -117,4 +120,6 @@ jobs:
           uploadWorkflowArtifacts: true
           prerelease: false
           args: ${{ matrix.args }}
+          # Tauri script should be "bunx @tauri-apps/cli ${{ matrix.mobile }}" only if matrix.mobile is not empty
+          tauriScript: ${{ matrix.mobile != '' && format('bunx @tauri-apps/cli {0}', matrix.mobile) || '' }}
           mobile: ${{ matrix.mobile }}
