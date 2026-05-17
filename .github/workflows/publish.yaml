@@ -107,14 +107,13 @@ jobs:
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri-action
-        if: matrix.mobile == ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: quiznac-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: QUIZNAC v__VERSION__
           releaseBody: Voir les assets pour installer l'application sur différentes plateformes.
-          args: ${{ matrix.args }}
+          args: ${{ matrix.mobile == 'ios' && '' || matrix.args }}
 
       - name: build mobile
         if: matrix.mobile != ''
@@ -123,13 +122,13 @@ jobs:
       - name: rename android assets
         if: matrix.mobile == 'android'
         run: |
-          mv ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk ./src-tauri/gen/android/app/build/outputs/apk/universal/release/quiznac_${{ steps.tauri-action.outputs.appVersion }}.apk
-          mv ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/quiznac_${{ steps.tauri-action.outputs.appVersion }}.aab
+          mv ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk ./src-tauri/gen/android/app/build/outputs/apk/universal/release/Quiznac_${{ steps.tauri-action.outputs.appVersion }}.apk
+          mv ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/Quiznac_${{ steps.tauri-action.outputs.appVersion }}.aab
 
       - name: rename ios assets
         if: matrix.mobile == 'ios'
         run: |
-          mv ./src-tauri/gen/apple/build/arm64/Quiznac.ipa ./src-tauri/gen/apple/build/arm64/quiznac_${{ steps.tauri-action.outputs.appVersion }}.ipa
+          mv ./src-tauri/gen/apple/build/arm64/Quiznac.ipa ./src-tauri/gen/apple/build/arm64/Quiznac_${{ steps.tauri-action.outputs.appVersion }}.ipa
 
       - name: publish ios
         if: matrix.mobile == 'ios'
@@ -141,7 +140,7 @@ jobs:
           name: QUIZNAC v${{ steps.tauri-action.outputs.appVersion }}
           body: Voir les assets pour installer l'application sur différentes plateformes.
           files: |
-            ./src-tauri/gen/apple/build/arm64/quiznac_${{ steps.tauri-action.outputs.appVersion }}.ipa
+            ./src-tauri/gen/apple/build/arm64/Quiznac_${{ steps.tauri-action.outputs.appVersion }}.ipa
 
       - name: publish android
         if: matrix.mobile == 'android'
@@ -153,5 +152,5 @@ jobs:
           name: QUIZNAC v${{ steps.tauri-action.outputs.appVersion }}
           body: Voir les assets pour installer l'application sur différentes plateformes.
           files: |
-            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/quiznac_${{ steps.tauri-action.outputs.appVersion }}.apk
-            ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/quiznac_${{ steps.tauri-action.outputs.appVersion }}.aab
+            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/Quiznac_${{ steps.tauri-action.outputs.appVersion }}.apk
+            ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/Quiznac_${{ steps.tauri-action.outputs.appVersion }}.aab
