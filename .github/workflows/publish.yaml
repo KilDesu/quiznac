@@ -116,7 +116,6 @@ jobs:
           releaseName: "QUIZNAC v__VERSION__"
           releaseBody: "Voir les assets pour installer l'application sur différentes plateformes."
           releaseDraft: true
-          uploadPlainBinary: true
           uploadWorkflowArtifacts: true
           prerelease: false
           args: ${{ matrix.args }}
