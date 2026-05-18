@@ -28,9 +28,14 @@
             InstallScope="perUser"
             SummaryCodepage="!(loc.TauriCodepage)" />
 
+            <Property Id="ALLUSERS" Secure="yes" Value="2" />
+            <Property
+            Id="MSIINSTALLPERUSER" Secure="yes" Value="1" />
+
         <!-- https://docs.microsoft.com/en-us/windows/win32/msi/reinstallmode -->
         <!-- reinstall all files; rewrite all registry entries; reinstall all shortcuts -->
-        <Property Id="REINSTALLMODE" Value="amus" />
+        <Property Id="REINSTALLMODE"
+            Value="amus" />
 
         <!-- Auto launch app after installation, useful for passive mode which usually used in
         updates -->
@@ -119,8 +124,8 @@
                         Name="Desktop Shortcut" Type="integer" Value="1" KeyPath="yes" />
                 </Component>
             </Directory>
-            <Directory Id="$(var.PlatformProgramFilesFolder)" Name="PFiles">
-                <Directory Id="INSTALLDIR" Name="{{product_name}}" />
+            <Directory Id="LocalAppDataFolder">
+                <Directory Id="INSTALLDIR" Name="[LocalAppDataFolder]Programs\{{product_name}}" />
             </Directory>
             <Directory Id="ProgramMenuFolder">
                 <Directory Id="ApplicationProgramsFolder" Name="{{product_name}}" />

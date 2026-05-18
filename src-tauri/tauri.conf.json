@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Quiznac",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "identifier": "com.quiznac.enac",
   "build": {
     "frontendDist": "../.output/public",
@@ -46,7 +46,9 @@
       "certificateThumbprint": null,
       "digestAlgorithm": null,
       "minimumWebview2Version": null,
-      "nsis": null,
+      "nsis": {
+        "installMode": "currentUser"
+      },
       "signCommand": null,
       "timestampUrl": null,
       "tsp": false,
@@ -54,6 +56,7 @@
         "silent": true,
         "type": "downloadBootstrapper"
       },
+
       "wix": {
         "language": "fr-FR",
         "template": "./main.wxs"
