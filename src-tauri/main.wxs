@@ -28,14 +28,13 @@
             InstallScope="perUser"
             SummaryCodepage="!(loc.TauriCodepage)" />
 
-            <Property Id="ALLUSERS" Secure="yes" Value="2" />
-            <Property
-            Id="MSIINSTALLPERUSER" Secure="yes" Value="1" />
-
         <!-- https://docs.microsoft.com/en-us/windows/win32/msi/reinstallmode -->
         <!-- reinstall all files; rewrite all registry entries; reinstall all shortcuts -->
-        <Property Id="REINSTALLMODE"
-            Value="amus" />
+        <Property Id="REINSTALLMODE" Value="amus" />
+        <Property
+            Id="ALLUSERS" Secure="yes" Value="2" />
+        <Property Id="MSIINSTALLPERUSER" Secure="yes"
+            Value="1" />
 
         <!-- Auto launch app after installation, useful for passive mode which usually used in
         updates -->
@@ -63,24 +62,18 @@
         <SetProperty Id="ARPNOMODIFY" Value="1"
             After="InstallValidate" Sequence="execute" /> {{#if homepage}} <Property
             Id="ARPURLINFOABOUT" Value="{{homepage}}" />
-        <Property Id="ARPHELPLINK"
+            <Property Id="ARPHELPLINK"
             Value="{{homepage}}" />
-        <Property Id="ARPURLUPDATEINFO" Value="{{homepage}}" /> {{/if}} <!--
-        NOTE: The order of RegistrySearch elements below matters. In WIX, when multiple
-             RegistrySearch elements are listed under a single Property, the LAST successful
-             match wins. We list the NSIS default-key search first and the MSI InstallDir
-             search second so that the MSI-specific path takes priority when both keys exist. -->
-        <Property
-            Id="INSTALLDIR">
-            <!-- First attempt: Search for the default key value (this is how the nsis installer
-            stores the path) -->
-            <RegistrySearch Id="PrevInstallDirNoName" Root="HKCU"
-                Key="Software\\{{manufacturer}}\\{{product_name}}" Type="raw" />
-
-            <!-- Second attempt: Search for "InstallDir" which takes priority if found (this is how
-            the msi installer stores the path) -->
+            <Property Id="ARPURLUPDATEINFO" Value="{{homepage}}" /> {{/if}} <Property
+            Id="INSTALLDIR" Value="[LocalAppDataFolder]Programs\{{product_name}}">
+            <!-- First attempt: Search for "InstallDir" -->
             <RegistrySearch Id="PrevInstallDirWithName" Root="HKCU"
                 Key="Software\\{{manufacturer}}\\{{product_name}}" Name="InstallDir" Type="raw" />
+
+            <!-- Second attempt: If the first fails, search for the default key value (this is how
+            the nsis installer currently stores the path) -->
+            <RegistrySearch Id="PrevInstallDirNoName" Root="HKCU"
+                Key="Software\\{{manufacturer}}\\{{product_name}}" Type="raw" />
         </Property>
 
         <!-- launch app checkbox -->
@@ -124,8 +117,8 @@
                         Name="Desktop Shortcut" Type="integer" Value="1" KeyPath="yes" />
                 </Component>
             </Directory>
-            <Directory Id="LocalAppDataFolder">
-                <Directory Id="INSTALLDIR" Name="[LocalAppDataFolder]Programs\{{product_name}}" />
+            <Directory Id="$(var.PlatformProgramFilesFolder)" Name="PFiles">
+                <Directory Id="INSTALLDIR" Name="{{product_name}}" />
             </Directory>
             <Directory Id="ProgramMenuFolder">
                 <Directory Id="ApplicationProgramsFolder" Name="{{product_name}}" />
